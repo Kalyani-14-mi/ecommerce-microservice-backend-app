@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: favourite-service
+  labels:
+    app: favourite-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: favourite-service
+  template:
+    metadata:
+      labels:
+        app: favourite-service
+    spec:
+      containers:
+        - name: favourite-service
+          image: xennit/favourite-service:latest
+          ports:
+            - containerPort: 8800
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "dev"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: favourite-service
+spec:
+  selector:
+    app: favourite-service
+  ports:
+    - protocol: TCP
+      port: 8800
+      targetPort: 8800
+  type: ClusterIP
