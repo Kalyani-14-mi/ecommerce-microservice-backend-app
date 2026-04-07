@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy-client
+  labels:
+    app: proxy-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proxy-client
+  template:
+    metadata:
+      labels:
+        app: proxy-client
+    spec:
+      containers:
+        - name: proxy-client
+          image: xennit/proxy-client:latest
+          ports:
+            - containerPort: 8900
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "dev"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy-client
+spec:
+  selector:
+    app: proxy-client
+  ports:
+    - protocol: TCP
+      port: 8900
+      targetPort: 8900
+      nodePort: 30004
+  type: NodePort
