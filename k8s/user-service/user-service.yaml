@@ -22,6 +22,51 @@ spec:
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: "dev"
+              apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-service
+  labels:
+    app: payment-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-service
+  template:
+    metadata:
+      labels:
+        app: payment-service
+    spec:
+      containers:
+        - name: payment-service
+          image: xennit/payment-service:latest
+          ports:
+            - containerPort: 8400
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "dev"
+          resources:
+            requests:
+              memory: "384Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m" 
+              
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-service
+spec:
+  selector:
+    app: payment-service
+  ports:
+    - protocol: TCP
+      port: 8400
+      targetPort: 8400
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
