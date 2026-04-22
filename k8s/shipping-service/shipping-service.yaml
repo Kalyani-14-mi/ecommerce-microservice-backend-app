@@ -25,22 +25,22 @@ spec:
               apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: payment-service
+  name: shipping-service
   labels:
-    app: payment-service
+    app: shipping-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: payment-service
+      app: shipping-service
   template:
     metadata:
       labels:
-        app: payment-service
+        app: shipping-service
     spec:
       containers:
-        - name: payment-service
-          image: xennit/payment-service:latest
+        - name: shipping-service
+          image: xennit/shipping-service:latest
           ports:
             - containerPort: 8400
           env:
@@ -58,10 +58,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: payment-service
+  name: shipping-service
 spec:
   selector:
-    app: payment-service
+    app: shipping-service
   ports:
     - protocol: TCP
       port: 8400
