@@ -25,22 +25,22 @@ spec:
               apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: payment-service
+  name: proxy-client
   labels:
-    app: payment-service
+    app: proxy-client
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: payment-service
+      app: proxy-client
   template:
     metadata:
       labels:
-        app: payment-service
+        app: proxy-client
     spec:
       containers:
-        - name: payment-service
-          image: xennit/payment-service:latest
+        - name: proxy-client
+          image: xennit/proxy-client:latest
           ports:
             - containerPort: 8400
           env:
@@ -58,10 +58,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: payment-service
+  name: proxy-client
 spec:
   selector:
-    app: payment-service
+    app: proxy-client
   ports:
     - protocol: TCP
       port: 8400
