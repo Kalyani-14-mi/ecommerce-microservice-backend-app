@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: config-server
+spec:
+  selector:
+    app: config-server   # adjust to match your config server pod's label
+  ports:
+    - port: 9296
+      targetPort: 9296
