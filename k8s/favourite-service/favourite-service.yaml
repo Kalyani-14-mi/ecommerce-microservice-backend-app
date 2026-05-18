@@ -22,13 +22,23 @@ spec:
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: "dev"
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: "http://eureka-server:8761/eureka/"
+            - name: SPRING_CONFIG_IMPORT
+              value: "optional:configserver:http://config-server:9296"
+            - name: SPRING_ZIPKIN_BASE_URL
+              value: "http://zipkin:9411"
+            - name: EUREKA_INSTANCE_HOSTNAME
+              value: "favourite-service"
+            - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
+              value: "false"
           resources:
             requests:
               memory: "384Mi"
               cpu: "250m"
             limits:
               memory: "512Mi"
-              cpu: "500m"   
+              cpu: "500m"
 ---
 apiVersion: v1
 kind: Service
